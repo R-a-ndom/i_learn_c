@@ -5,7 +5,7 @@
 */
 
 #include <stdio.h>
-#include "pastriangle.h"
+#include "pas_triangle.h"
 
 #define MAX_ARR 50
 

@@ -3,12 +3,12 @@
 # on the standard output.
 # size of triangle is the first comand-line argument
 
-pastriangle:main.c pastriangle.o
-	gcc -Wall -o pastriangle main.c pastriangle.o
+pas_triangle:main.c pas_triangle.o
+	gcc -Wall -o pas_triangle main.c pas_triangle.o
 
-pastriangle.o:pastriangle.c pastriangle.h
-	gcc -c -Wall pastriangle.c
+pas_triangle.o:pas_triangle.c pas_triangle.h
+	gcc -c -Wall pas_triangle.c
 
 clean:
-	rm *.o pastriangle
+	rm *.o pas_triangle
 

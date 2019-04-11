@@ -1,10 +1,9 @@
 /*
-  Pascal triangle program function
-
+  Pascal triangle program functions
   (c) Alexey Sorokin, 2018
 */
 
-#include "pastriangle.h"
+#include "pas_triangle.h"
 
 /*
   translating a string from " $1 " into a integer number

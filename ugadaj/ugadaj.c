@@ -1,10 +1,12 @@
 /*
-  simple number 1...1000 game
+  simple guessing number 1...1000 game
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
+#include <string.h>
 
 enum {
   max_line       = 100,
@@ -24,7 +26,7 @@ enum {
 };
 
 enum {
-  c_very_cold = 150,
+  c_very_cold = 100,
   c_cold      =  50,
   c_warm      =  25,
   c_hot       =   5
@@ -32,7 +34,7 @@ enum {
 
 
 int get_try_line(char *try_line, int lim)
-    {
+{
   char ch;
   int sym_c;
   for(sym_c = 0 ;sym_c < lim-1 && (ch = getchar()) != EOF && ch != '\n'; sym_c++)
@@ -52,24 +54,39 @@ int str2int(const char* our_str)
   int our_num = 0;
   int i = 0;
   while( our_str[i] != '\0' ) {
-    switch (our_str[i]) {
-      case '0': case '1': case '2': case '3': case '4':
-      case '5': case '6': case '7': case '8': case '9':
-        our_num = (our_num * 10) + (our_str[i] - '0');
-        break;
-      default:
-        return -1;
+    if (isdigit(our_str[i]))
+    {
+      our_num = (our_num * 10) + (our_str[i] - '0');
+      i++;
+    } else {
+      return -1;
     }
-    i++;
   }
   return our_num;
 }
 
 
-int compare_input(int secret_num, int try_num)
+int get_try_number()
+{
+  char try_line[max_line];
+  int tmp;
+  if (get_try_line(try_line,max_line) == -1)
+  {
+    printf("Input error !\n");
+    return -1;
+  } else {
+    tmp = str2int(try_line);
+    if (tmp == -1)
+      return -1;
+    else
+      return tmp;
+  }
+}
+
+int compare_nums(const int secret_num,const int try_num)
 {
   if (secret_num == try_num) {
-    printf("Right !!!");
+    printf("Right !!!\n");
     return state_fine;
   } else {
 
@@ -86,12 +103,8 @@ int compare_input(int secret_num, int try_num)
       printf("Warm !..\n");
     else if (delta <= c_cold)
       printf("C-c-cold !\n");
-    else if (delta <= c_very_cold)
+    else
       printf("We-ery c-c-cold !..\n");
-    else {
-      printf("compare_input() - WTF ?\n");
-      exit(1);
-    }
   }
   return state_continue;
 }
@@ -100,29 +113,34 @@ int main()
 {
   time_t t;
   int secret_num, try_num;
-
-/*  int tries_count = 0;
-  int game_state = state_continue; */
-
-  char try_line[max_line];
+  int tries_count = 0;
+  int game_state = state_continue;
 
   srand((unsigned) time(&t));
-
-  printf("guess a number 1..1000 !\n");
+  printf("[ Simple guessing number game ]\n");
+  printf("Guess a number 1..1000 !\n");
   secret_num = ( rand() % max_secret_num ) + 1;
-  printf("%d\n",secret_num);
-
-  printf("Please input your choice ::>> ");
-  if ( get_try_line(try_line,max_line) )
-    printf("Your input is < %s >\n",try_line);
-  else
-    printf("< %s > - Input error !!!\n",try_line);
-
-  if ( (try_num=str2int(try_line)) != -1 )
-    printf("Your number : < %d >\n",try_num);
-  else
-    printf("String checking error !!!\n");
-
+  while (game_state != state_quit) {
+    if (tries_count == 0)
+      printf("Let's guess the number!");
+    else
+      printf("Your try is < %d >",tries_count);
+    printf(" ! Please input your choice :>> ");
+    try_num = get_try_number();
+    if ((try_num == -1) || (try_num <= 0) || (try_num > 1000))
+    {
+      printf("Incorrect input! Please input a number 1..1000 !\n");
+    } else {
+      printf("Your input is: < %d > - ",try_num);
+      game_state = compare_nums(secret_num,try_num);
+      if (game_state == state_continue) {
+        tries_count++;
+      } else {
+        game_state = state_quit;
+      }
+    }
+  }
+  printf("Your tries number - %d\n",tries_count);
   printf("thanks for game!\n");
   return 0;
 }

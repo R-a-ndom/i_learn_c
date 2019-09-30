@@ -1,5 +1,5 @@
 /*
-  simple guessing number 1...1000 game
+  simple number guessing ( 1...1000 ) game
  */
 
 #include <stdio.h>
@@ -32,7 +32,6 @@ enum {
   c_hot       =   5
 };
 
-
 int get_try_line(char *try_line, int lim)
 {
   char ch;
@@ -47,7 +46,6 @@ int get_try_line(char *try_line, int lim)
   try_line[sym_c] = '\0';
   return 0;
 }
-
 
 int str2int(const char* our_str)
 {
@@ -117,7 +115,7 @@ int main()
   int game_state = state_continue;
 
   srand((unsigned) time(&t));
-  printf("[ Simple guessing number game ]\n");
+  printf("[ Simple number guessing game ]\n");
   printf("Guess a number 1..1000 !\n");
   secret_num = ( rand() % max_secret_num ) + 1;
   while (game_state != state_quit) {

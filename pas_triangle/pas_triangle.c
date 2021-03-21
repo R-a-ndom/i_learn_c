@@ -46,13 +46,13 @@ void print_empty_space(int n)
 void print_our_line(unsigned long int_arr[])
 {
   int i=0;
-    printf("|%3ld",int_arr[i]);
+    printf("/%3ld",int_arr[i]);
   i++;
   while (int_arr[i]>1) {
     printf(" %3ld",int_arr[i]);
     i++;
   }
-  printf(" %3ld  |\n",int_arr[i]);
+  printf(" %3ld  \\\n",int_arr[i]);
 }
 
 /*

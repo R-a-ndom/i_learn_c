@@ -26,7 +26,7 @@ int main(int argc, char **argv)
   }
   our_line[0]=1;
   print_empty_space(num);
-  printf("|  1  |\n");
+  printf("/  1  \\\n");
   count_next_line(our_line);
   while (i<=num) {
     print_empty_space(num-i);
